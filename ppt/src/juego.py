@@ -2,9 +2,35 @@ import random
 import os
 
 # ---------------------------------------------------------
+# Utilidades generales
+# ---------------------------------------------------------
+def limpiar_pantalla():
+    """Limpia la pantalla de la consola según el sistema operativo."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def pedir_confirmacion(mensaje):
+    """
+    Solicita al usuario una confirmación 's' o 'n'.
+
+    Args:
+        mensaje (str): Texto a mostrar al usuario.
+
+    Returns:
+        bool: True si el usuario responde 's', False si responde 'n'.
+    """
+    while True:
+        respuesta = input(mensaje).lower()
+        if respuesta in ["s", "n"]:
+            return respuesta == "s"
+        print("❌ Solo se permite 's' o 'n'. Inténtalo de nuevo.")
+
+
+# ---------------------------------------------------------
 # Pantalla de bienvenida
 # ---------------------------------------------------------
 def mostrar_bienvenida():
+    """Muestra la pantalla de bienvenida del juego junto con las reglas."""
     print("======================================")
     print("      🎮  PIEDRA - PAPEL - TIJERA 🎮")
     print("======================================")
@@ -17,19 +43,23 @@ def mostrar_bienvenida():
 
 
 # ---------------------------------------------------------
-# Mostrar opciones al jugador
+# Opciones del juego
 # ---------------------------------------------------------
 def mostrar_opciones():
+    """Muestra las opciones disponibles para que el jugador elija."""
     print("Elige una opción:")
     print("1 - Piedra")
     print("2 - Papel")
     print("3 - Tijera")
 
 
-# ---------------------------------------------------------
-# Obtener elección del jugador con validación y try-except
-# ---------------------------------------------------------
 def obtener_eleccion_jugador():
+    """
+    Solicita al jugador que introduzca una opción válida (1, 2 o 3).
+
+    Returns:
+        str: La opción elegida por el jugador como cadena.
+    """
     while True:
         opcion = input("Introduce el número de tu elección (1, 2 o 3): ")
 
@@ -41,110 +71,121 @@ def obtener_eleccion_jugador():
 
         if numero in [1, 2, 3]:
             return str(numero)
-        else:
-            print("❌ Error: elige solo 1, 2 o 3.")
+
+        print("❌ Error: elige solo 1, 2 o 3.")
 
 
-# ---------------------------------------------------------
-# Convertir número a texto
-# ---------------------------------------------------------
 def convertir_numero_a_eleccion(numero):
-    if numero == "1":
-        return "Piedra"
-    elif numero == "2":
-        return "Papel"
-    elif numero == "3":
-        return "Tijera"
-    else:
-        return None
+    """
+    Convierte un número en su equivalente textual del juego.
+
+    Args:
+        numero (str): "1", "2" o "3".
+
+    Returns:
+        str: "Piedra", "Papel" o "Tijera".
+    """
+    return {"1": "Piedra", "2": "Papel", "3": "Tijera"}.get(numero)
 
 
-# ---------------------------------------------------------
-# Elección aleatoria de la computadora
-# ---------------------------------------------------------
 def generar_eleccion_computadora():
-    numero = random.randint(1, 3)
-
-    if numero == 1:
-        return "Piedra"
-    elif numero == 2:
-        return "Papel"
-    else:
-        return "Tijera"
+    """Genera aleatoriamente la elección de la computadora."""
+    return random.choice(["Piedra", "Papel", "Tijera"])
 
 
-# ---------------------------------------------------------
-# Mostrar elección de la computadora
-# ---------------------------------------------------------
 def mostrar_eleccion_computadora(eleccion):
+    """Muestra la elección realizada por la computadora."""
     print("La computadora ha elegido:", eleccion)
 
 
 # ---------------------------------------------------------
-# Determinar ganador según las reglas del juego
+# Lógica del juego
 # ---------------------------------------------------------
 def determinar_ganador(jugador, computadora):
+    """
+    Determina el ganador de la ronda.
+
+    Args:
+        jugador (str)
+        computadora (str)
+
+    Returns:
+        str: "Jugador", "Computadora" o "Empate".
+    """
     if jugador == computadora:
         return "Empate"
 
-    if jugador == "Piedra" and computadora == "Tijera":
-        return "Jugador"
-    elif jugador == "Tijera" and computadora == "Papel":
-        return "Jugador"
-    elif jugador == "Papel" and computadora == "Piedra":
-        return "Jugador"
+    reglas = {
+        "Piedra": "Tijera",
+        "Tijera": "Papel",
+        "Papel": "Piedra"
+    }
 
-    return "Computadora"
+    return "Jugador" if reglas[jugador] == computadora else "Computadora"
 
 
-# ---------------------------------------------------------
-# Convertir ganador en texto de resultado
-# ---------------------------------------------------------
 def resultado_ronda(ganador):
-    if ganador == "Jugador":
-        return "Victoria"
-    elif ganador == "Computadora":
-        return "Derrota"
+    """Convierte el ganador en un texto descriptivo."""
+    return {
+        "Jugador": "Victoria",
+        "Computadora": "Derrota",
+        "Empate": "Empate"
+    }[ganador]
+
+
+def mostrar_marcador(victorias, derrotas, empates):
+    """Muestra el marcador actual."""
+    print("\n--- Marcador ---")
+    print("Victorias:", victorias)
+    print("Derrotas:", derrotas)
+    print("Empates:", empates)
+    print("----------------\n")
+
+
+def mostrar_resumen_final(victorias, derrotas, empates):
+    """Muestra el resumen final de la partida."""
+    total = victorias + derrotas + empates
+    porcentaje = (victorias / total) * 100 if total > 0 else 0
+
+    if victorias > derrotas:
+        ganador_final = "Jugador"
+    elif derrotas > victorias:
+        ganador_final = "Computadora"
     else:
-        return "Empate"
+        ganador_final = "Empate"
+
+    print("\n===== RESUMEN FINAL =====")
+    print(f"Rondas jugadas: {total}")
+    print(f"Victorias: {victorias}")
+    print(f"Derrotas: {derrotas}")
+    print(f"Empates: {empates}")
+    print(f"Porcentaje de victorias: {porcentaje:.2f}%")
+    print(f"Ganador final: {ganador_final}")
+    print("=========================\n")
 
 
 # ---------------------------------------------------------
-# Mostrar resultado por pantalla
-# ---------------------------------------------------------
-def mostrar_resultado(resultado):
-    print("Resultado de la ronda:", resultado)
-
-
-# ---------------------------------------------------------
-# Función principal del juego con rondas infinitas
+# Bucle principal del juego
 # ---------------------------------------------------------
 def jugar():
-    mostrar_bienvenida()
-    input("Pulsa ENTER para comenzar...")
-
-    victorias = 0
-    derrotas = 0
-    empates = 0
+    """Ejecuta una partida completa del juego."""
+    victorias = derrotas = empates = 0
     ronda = 1
 
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
-
+        limpiar_pantalla()
         print(f"===== Ronda {ronda} =====")
 
         mostrar_opciones()
-        opcion_jugador = obtener_eleccion_jugador()
-        jugador = convertir_numero_a_eleccion(opcion_jugador)
-
+        jugador = convertir_numero_a_eleccion(obtener_eleccion_jugador())
         computadora = generar_eleccion_computadora()
+
         mostrar_eleccion_computadora(computadora)
 
         ganador = determinar_ganador(jugador, computadora)
         resultado = resultado_ronda(ganador)
-        mostrar_resultado(resultado)
+        print("Resultado de la ronda:", resultado)
 
-        # Actualizar marcador
         if resultado == "Victoria":
             victorias += 1
         elif resultado == "Derrota":
@@ -152,48 +193,37 @@ def jugar():
         else:
             empates += 1
 
-        # Mostrar marcador actual
-        print("\n--- Marcador ---")
-        print("Victorias:", victorias)
-        print("Derrotas:", derrotas)
-        print("Empates:", empates)
-        print("----------------\n")
+        mostrar_marcador(victorias, derrotas, empates)
 
-        # Preguntar si quiere seguir jugando
-        seguir = input("¿Quieres jugar otra ronda? (s/n): ").lower()
-        if seguir != "s":
-
-            total_rondas = victorias + derrotas + empates
-            porcentaje_victorias = (victorias / total_rondas) * 100 if total_rondas > 0 else 0
-
-            # Determinar ganador final
-            if victorias > derrotas:
-                ganador_final = "Jugador"
-            elif derrotas > victorias:
-                ganador_final = "Computadora"
-            else:
-                ganador_final = "Empate"
-
-            print("\n===== RESUMEN FINAL =====")
-            print(f"Rondas jugadas: {total_rondas}")
-            print(f"Victorias: {victorias}")
-            print(f"Derrotas: {derrotas}")
-            print(f"Empates: {empates}")
-            print(f"Porcentaje de victorias: {porcentaje_victorias:.2f}%")
-            print(f"Ganador final: {ganador_final}")
-            print("=========================\n")
-
-            print("Gracias por jugar. ¡Hasta la próxima!")
+        if not pedir_confirmacion("¿Quieres jugar otra ronda? (s/n): "):
+            mostrar_resumen_final(victorias, derrotas, empates)
             break
 
         ronda += 1
 
 
 # ---------------------------------------------------------
-# Ejecutar el juego
+# Bucle principal del programa (NUEVO)
 # ---------------------------------------------------------
-jugar()
+def main():
+    """
+    Bucle principal del programa.
+    Permite jugar múltiples partidas sin cerrar el programa.
+    """
+    while True:
+        limpiar_pantalla()
+        mostrar_bienvenida()
+        input("Pulsa ENTER para comenzar...")
+
+        jugar()
+
+        if not pedir_confirmacion("¿Quieres jugar otra partida completa? (s/n): "):
+            print("Gracias por jugar. ¡Hasta la próxima!")
+            break
 
 
-
+# ---------------------------------------------------------
+# Ejecutar el programa
+# ---------------------------------------------------------
+main()
 

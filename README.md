@@ -1,2 +1,2 @@
-# Piedra Papel Tijera
+# Piedra Papel Tijera en Python
 ## Juego con IA

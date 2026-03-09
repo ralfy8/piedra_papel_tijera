@@ -16,7 +16,7 @@ PIEDRA PAPEL TIJERA EN PYTHON
 
 1. Clonar el repositorio:
 
-git clone 
+git clone https://github.com/ralfy8/piedra_papel_tijera/tree/main
 
 2. Entrar en la carpeta del proyecto:
 

@@ -22,3 +22,12 @@ def convertir_numero_a_eleccion(numero):
     else:
         return None
 
+  def generar_eleccion_computadora():
+     numero = random.randint(1, 3)
+    
+    if numero == 1:
+        return "Piedra"
+    elif numero == 2:
+        return "Papel"
+    else:
+        return "Tijera"

@@ -1,1 +1,2 @@
-# piedra_papel_tijera
+# Piedra Papel Tijera
+## Juego con IA

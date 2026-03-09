@@ -10,6 +10,12 @@ def mostrar_opciones():
     print("2 - Papel")
     print("3 - Tijera")
 
-def obtener_eleccion_jugador():
-    opcion = input("Introduce el número de tu elección: ")
-    return opcion
+def convertir_numero_a_eleccion(numero):
+    if numero == "1":
+        return "Piedra"
+    elif numero == "2":
+        return "Papel"
+    elif numero == "3":
+        return "Tijera"
+    else:
+        return None

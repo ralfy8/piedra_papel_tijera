@@ -1,14 +1,30 @@
 import random
+import os
+
+# ---------------------------------------------------------
+# Pantalla de bienvenida
+# ---------------------------------------------------------
+def mostrar_bienvenida():
+    print("======================================")
+    print("      🎮  PIEDRA - PAPEL - TIJERA 🎮")
+    print("======================================")
+    print("\nReglas del juego:")
+    print(" - Piedra gana a Tijera")
+    print(" - Tijera gana a Papel")
+    print(" - Papel gana a Piedra")
+    print(" - Si ambos eligen lo mismo, es un empate\n")
+    print("¡Que comience el juego!\n")
+
 
 # ---------------------------------------------------------
 # Mostrar opciones al jugador
 # ---------------------------------------------------------
-
 def mostrar_opciones():
     print("Elige una opción:")
     print("1 - Piedra")
     print("2 - Papel")
     print("3 - Tijera")
+
 
 # ---------------------------------------------------------
 # Obtener elección del jugador con validación y try-except
@@ -28,11 +44,10 @@ def obtener_eleccion_jugador():
         else:
             print("❌ Error: elige solo 1, 2 o 3.")
 
+
 # ---------------------------------------------------------
 # Convertir número a texto
 # ---------------------------------------------------------
-
-
 def convertir_numero_a_eleccion(numero):
     if numero == "1":
         return "Piedra"
@@ -43,16 +58,13 @@ def convertir_numero_a_eleccion(numero):
     else:
         return None
 
-    def mostrar_eleccion_computadora(eleccion):
-     print("La computadora ha elegido:", eleccion)
 
 # ---------------------------------------------------------
 # Elección aleatoria de la computadora
 # ---------------------------------------------------------
+def generar_eleccion_computadora():
+    numero = random.randint(1, 3)
 
-    def generar_eleccion_computadora():
-     numero = random.randint(1, 3)
-    
     if numero == 1:
         return "Piedra"
     elif numero == 2:
@@ -60,12 +72,14 @@ def convertir_numero_a_eleccion(numero):
     else:
         return "Tijera"
 
+
 # ---------------------------------------------------------
 # Mostrar elección de la computadora
 # ---------------------------------------------------------
 def mostrar_eleccion_computadora(eleccion):
     print("La computadora ha elegido:", eleccion)
-    
+
+
 # ---------------------------------------------------------
 # Determinar ganador según las reglas del juego
 # ---------------------------------------------------------
@@ -103,14 +117,20 @@ def mostrar_resultado(resultado):
 
 
 # ---------------------------------------------------------
-# Función principal del juego con marcador
+# Función principal del juego con rondas infinitas
 # ---------------------------------------------------------
 def jugar():
+    mostrar_bienvenida()
+
     victorias = 0
     derrotas = 0
     empates = 0
+    ronda = 1
 
     while True:
+        os.system('cls' if os.name == 'nt' else 'clear')  # ← limpiar pantalla
+        print(f"===== Ronda {ronda} =====")
+
         mostrar_opciones()
         opcion_jugador = obtener_eleccion_jugador()
         jugador = convertir_numero_a_eleccion(opcion_jugador)
@@ -130,21 +150,26 @@ def jugar():
         else:
             empates += 1
 
+        # Mostrar marcador actual
         print("\n--- Marcador ---")
         print("Victorias:", victorias)
         print("Derrotas:", derrotas)
         print("Empates:", empates)
         print("----------------\n")
 
+        # Preguntar si quiere seguir jugando
         seguir = input("¿Quieres jugar otra ronda? (s/n): ").lower()
         if seguir != "s":
             print("Gracias por jugar. ¡Hasta la próxima!")
             break
+
+        ronda += 1
 
 
 # ---------------------------------------------------------
 # Ejecutar el juego
 # ---------------------------------------------------------
 jugar()
+
 
 

@@ -1,3 +1,5 @@
+import random
+
 def mostrar_opciones():
     print("Elige una opción:")
     print("1 - Piedra")
@@ -19,3 +21,4 @@ def convertir_numero_a_eleccion(numero):
         return "Tijera"
     else:
         return None
+

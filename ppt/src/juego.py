@@ -121,6 +121,7 @@ def mostrar_resultado(resultado):
 # ---------------------------------------------------------
 def jugar():
     mostrar_bienvenida()
+    input("Pulsa ENTER para comenzar...")
 
     victorias = 0
     derrotas = 0
@@ -128,7 +129,8 @@ def jugar():
     ronda = 1
 
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')  # ← limpiar pantalla
+        os.system('cls' if os.name == 'nt' else 'clear')
+
         print(f"===== Ronda {ronda} =====")
 
         mostrar_opciones()
@@ -160,6 +162,27 @@ def jugar():
         # Preguntar si quiere seguir jugando
         seguir = input("¿Quieres jugar otra ronda? (s/n): ").lower()
         if seguir != "s":
+
+            total_rondas = victorias + derrotas + empates
+            porcentaje_victorias = (victorias / total_rondas) * 100 if total_rondas > 0 else 0
+
+            # Determinar ganador final
+            if victorias > derrotas:
+                ganador_final = "Jugador"
+            elif derrotas > victorias:
+                ganador_final = "Computadora"
+            else:
+                ganador_final = "Empate"
+
+            print("\n===== RESUMEN FINAL =====")
+            print(f"Rondas jugadas: {total_rondas}")
+            print(f"Victorias: {victorias}")
+            print(f"Derrotas: {derrotas}")
+            print(f"Empates: {empates}")
+            print(f"Porcentaje de victorias: {porcentaje_victorias:.2f}%")
+            print(f"Ganador final: {ganador_final}")
+            print("=========================\n")
+
             print("Gracias por jugar. ¡Hasta la próxima!")
             break
 
@@ -170,6 +193,7 @@ def jugar():
 # Ejecutar el juego
 # ---------------------------------------------------------
 jugar()
+
 
 
 

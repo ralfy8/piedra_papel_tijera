@@ -6,6 +6,16 @@ def mostrar_opciones():
     print("2 - Papel")
     print("3 - Tijera")
 
+def obtener_eleccion_jugador():
+    while True:
+        opcion = input("Introduce el número de tu elección (1, 2 o 3): ")
+
+        if opcion in ["1", "2", "3"]:
+            return opcion
+        else:
+            print("Entrada no válida. Por favor, elige 1, 2 o 3.")
+
+
 def convertir_numero_a_eleccion(numero):
     if numero == "1":
         return "Piedra"
@@ -68,4 +78,5 @@ def resultado_ronda(ganador):
     
 def mostrar_resultado(resultado):
     print("Resultado de la ronda:", resultado)
+
 

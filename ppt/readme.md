@@ -46,17 +46,19 @@ python juego.py
 4. El juego muestra el resultado y actualiza las estadísticas.
 
 ## Estructura del proyecto
-
-ppt/ 
-│ 
-├── README.md 
-├── .gitignore 
-├── requirements.txt 
-├── src/ 
-│   └── juego.py 
-└── docs/ 
-└── asistencia_ia.md 
+```
+ppt/
+│
+├── README.md
+├── .gitignore
+├── requirements.txt
+├── src/
+│   ├── juego.py
+├── docs/
+      ├── asistencia_ia.md
+```
 
 ## Autor
+
 
 Proyecto realizado por [Raúl].
